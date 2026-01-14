@@ -31,32 +31,28 @@
 
   .closing{margin:22px 0 8px; background:#fff; border:1px dashed var(--border); border-radius:14px; padding:14px; text-align:center; font-weight:800; color:#0f172a}
 
-  /* Ensure text stays readable in night mode */
+  /* Night theme support */
   body[data-theme="night"] .hero,
   body[data-theme="night"] section.beh,
   body[data-theme="night"] footer { color: var(--text); }
   body[data-theme="night"] .btn { background:#0f2b5f; border-color:#20325c; color: var(--text); }
   body[data-theme="night"] .logo { background:#163463; }
+
   .foot{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .nca{display:flex; align-items:center; gap:10px}
   .nca img{height: 120px; width: auto}
   .nca #footnote{font-size:12px; line-height:1.4;}
 
-  /* Night theme (navy) */
   body[data-theme="night"]{ --bg:#0b1f48; --text:#e7ecf7; --muted:#c3cbe0; --border:#20325c; --card:#0f2b5f; color: var(--text); color-scheme: dark; background:linear-gradient(160deg,#0b1f48,#0f2b5f,#0b1f48) }
   body[data-theme="night"] .closing{ background:#0b1f48; color:#e7ecf7; border-color:#20325c }
   body[data-theme="night"] header{ background:#0f255dcc; color: var(--text); }
-  body[data-theme="night"]{ background:linear-gradient(160deg,#0b1f48,#0f2b5f,#0b1f48) }
 
-  /* LTR support */
   html[dir="ltr"] ul{padding-inline-start:22px}
-  .edit-outline{outline:2px dashed #94a3b8; outline-offset:4px; border-radius:8px;}
-  body[data-edit-mode="on"] .btn#edit-toggle{border-color:#f59e0b}
 
-  /* ✅ Read confirmation checkbox */
+  /* ✅ checkbox (end of behavior) */
   .read-check{
     display:block;
-    margin:12px 0 18px;
+    margin:16px 0 0;
     padding:10px 14px;
     background:#f1f5ff;
     border:1px solid #c7d2fe;
@@ -76,53 +72,7 @@
     color:#e7ecf7;
   }
 
-  /* ✅ Time pill */
-  #time-pill{
-    position: sticky;
-    top: 74px;
-    z-index: 9;
-    margin: 10px 0 0;
-    display:flex;
-    justify-content:center;
-    pointer-events:none;
-  }
-  #time-pill span{
-    background:#0f172a;
-    color:#fff;
-    padding:8px 12px;
-    border-radius:999px;
-    font-weight:900;
-    font-size:13px;
-  }
-  body[data-theme="night"] #time-pill span{
-    background:#e7ecf7;
-    color:#0b1f48;
-  }
-
-  /* ✅ Progress pill (0/5 → 5/5) */
-  #progress-pill{
-    position: sticky;
-    top: 112px; /* تحت التايمر */
-    z-index: 9;
-    margin: 8px 0 0;
-    display:flex;
-    justify-content:center;
-    pointer-events:none;
-  }
-  #progress-pill span{
-    background:#1e40af;
-    color:#fff;
-    padding:8px 12px;
-    border-radius:999px;
-    font-weight:900;
-    font-size:13px;
-  }
-  body[data-theme="night"] #progress-pill span{
-    background:#93c5fd;
-    color:#0b1f48;
-  }
-
-  /* ✅ Next button area (hidden until completed) */
+  /* ✅ Next area */
   #next-wrap{
     display:none;
     text-align:center;
@@ -132,6 +82,16 @@
     border-radius: 16px;
     padding: 18px;
   }
+
+  /* ✅ fixed English instruction (added; does NOT change button texts) */
+  #fixed-instruction{
+    margin: 0 0 14px 0;
+    font-weight:900;
+    color:#0f172a;
+    line-height:1.6;
+  }
+  body[data-theme="night"] #fixed-instruction{ color: var(--text); }
+
   #gate-msg{
     font-weight:900;
     margin: 0 0 12px 0;
@@ -159,6 +119,9 @@
     transform: translateY(-2px);
     box-shadow:0 14px 30px rgba(22,163,74,.45);
   }
+
+  /* ✅ hide timer + progress completely (still calculated in JS) */
+  #time-pill, #progress-pill { display:none !important; }
 </style>
 </head>
 
@@ -182,10 +145,9 @@
 </header>
 
 <main class="container">
-
-  <!-- ✅ Timer + Progress -->
-  <div id="time-pill"><span id="time-elapsed">الوقت: 00:00</span></div>
-  <div id="progress-pill"><span id="progress-text">التقدّم: 0/5</span></div>
+  <!-- hidden (kept for JS compatibility) -->
+  <div id="time-pill"><span id="time-elapsed">00:00</span></div>
+  <div id="progress-pill"><span id="progress-text">0/5</span></div>
 
   <div class="hero" id="hero-ar">
     <h1 id="hero">أمانك يبدأ من عاداتك وممارساتك السليمة!</h1>
@@ -199,25 +161,14 @@
 
   <!-- Arabic Content -->
   <div id="content-ar">
-
+    <!-- 1 -->
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 116 0v3z"></path></svg>
-        </span>
-        استخدام كلمات مرور قوية
-      </h2>
-
-      <label class="read-check">
-        <input type="checkbox" class="beh-read" data-lang="ar" data-beh="1">
-        بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
-      </label>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 116 0v3z"></path></svg>
+      </span>استخدام كلمات مرور قوية</h2>
 
       <h3>لماذا هي مهمة؟</h3>
-      <ul>
-        <li> كلمات المرور تمنع الغرباء من الوصول إلى حساباتك عبر الإنترنت.</li>
-        <li>كلمات المرور القوية تحمي حساباتك.</li>
-      </ul>
+      <ul><li> كلمات المرور تمنع الغرباء من الوصول إلى حساباتك عبر الإنترنت.</li><li>كلمات المرور القوية تحمي حساباتك.</li></ul>
       <h3>نصائح عملية</h3>
       <ul>
         <li> استخدم كلمة مرور طويلة – على الأقل 10 حروف.</li>
@@ -228,310 +179,209 @@
         <li>لا تشارك كلمات مرورك مع الآخرين.</li>
       </ul>
       <h3>أخطاء شائعة</h3>
-      <ul>
-        <li>استخدم كلمات مرور يمكن تخمينها مثل تاريخ ميلادك ورقم هاتفك واسم حيوانك الأليف ككلمة مرور.</li>
-        <li> .استخدام نفس كلمة المرور لحسابات متعددة </li>
-      </ul>
+      <ul><li>استخدم كلمات مرور يمكن تخمينها مثل تاريخ ميلادك ورقم هاتفك واسم حيوانك الأليف ككلمة مرور.</li><li> .استخدام نفس كلمة المرور لحسابات متعددة </li></ul>
+
+      <label class="read-check">
+        <input type="checkbox" class="beh-read" data-lang="ar" data-beh="1">
+        بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+      </label>
     </section>
 
+    <!-- 2 -->
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M10.59 13.41L9.17 12l4.24-4.24a3 3 0 114.24 4.24l-1.41 1.41-1.41-1.41 1.41-1.41a1 1 0 10-1.41-1.41L8.76 13.05a3 3 0 01-4.24-4.24l1.41-1.41 1.41 1.41-1.41 1.41a1 1 0 101.41 1.41l3.66-3.66 1.41 1.41-3.66 3.66a3 3 0 004.24 4.24l4.24-4.24 1.41 1.41-4.24 4.24a5 5 0 01-7.07-7.07l4.24-4.24 1.41 1.41-4.24 4.24"></path></svg>
-        </span>
-        التحقق من الروابط قبل النقر على الرسائل (الحماية من التصيّد الاحتيالي)
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M10.59 13.41L9.17 12l4.24-4.24a3 3 0 114.24 4.24l-1.41 1.41-1.41-1.41 1.41-1.41a1 1 0 10-1.41-1.41L8.76 13.05a3 3 0 01-4.24-4.24l1.41-1.41 1.41 1.41-1.41 1.41a1 1 0 101.41 1.41l3.66-3.66 1.41 1.41-3.66 3.66a3 3 0 004.24 4.24l4.24-4.24 1.41 1.41-4.24 4.24a5 5 0 01-7.07-7.07l4.24-4.24 1.41 1.41-4.24 4.24"></path></svg>
+      </span>التحقق من الروابط قبل النقر على الرسائل (الحماية من التصيّد الاحتيالي)</h2>
+
+      <h3>لماذا مهم؟</h3>
+      <ul><li>تحميك من سرقة البيانات، اختراق الأجهزة والاستيلاء على البيانات.</li><li>تحميك من المخاطر السيبرانية والتصيّد الإلكتروني.</li></ul>
+      <h3>نصائح عملية</h3>
+      <ul>
+        <li>تمهل 5 ثوانٍ قبل النقر وابحث عن العلامات التحذيرية (اللغة المتسرعة/المخيفة/المحفزة).</li>
+        <li>تحقق من هوية المرسل عند استلام رسالة/رابط مشبوه...</li>
+        <li>لا تُدخل معلوماتك الشخصية/الحساسة عبر روابط الرسائل...</li>
+        <li>إذا كانت جهة رسمية، فتأكد من مطابقة العنوان/الرابط...</li>
+      </ul>
+      <h3>أخطاء شائعة</h3>
+      <ul><li>التسرّع في الاستجابة للرسائل / الروابط بدافع الاندفاع أو الخوف.</li><li>النقر على روابط من مصادر غير معروفة وكشف معلومات شخصية .</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="ar" data-beh="2">
         بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
       </label>
-
-      <h3>لماذا مهم؟</h3>
-      <ul>
-        <li>تحميك من سرقة البيانات، اختراق الأجهزة والاستيلاء على البيانات.</li>
-        <li>تحميك من المخاطر السيبرانية والتصيّد الإلكتروني.</li>
-      </ul>
-      <h3>نصائح عملية</h3>
-      <ul>
-        <li>تمهل 5 ثوانٍ قبل النقر وابحث عن العلامات التحذيرية (اللغة المتسرعة/المخيفة/المحفزة).</li>
-        <li>تحقق من هوية المرسل عند استلام رسالة/رابط مشبوه. (هل تعرفه/ا؟ هل تتوقع او تنتظرههذه الرسالة/الرابط؟ هل يمكنك التواصل مع المرسل للتحقق من خلال قناة أخرى (مثل واتساب، إنستغرام، إلخ)؟ إذا كانت الإجابة لا، فلا تنقر.</li>
-        <li>لا تُدخل معلوماتك الشخصية/الحساسة عبر روابط الرسائل (مثل الاسم، تاريخ الميلاد، الهوية، كلمات المرور، رمز التحقق لمرة واحدة، تفاصيل الحساب البنكي، إلخ).</li>
-        <li>إذا كانت جهة رسمية، فتأكد من مطابقة العنوان/الرابط المرسل مع المعلومات في الموقع الإلكتروني الرسمي للجهة بنسبة 100%.</li>
-        <li>ما زلت غير متأكد؟ استخدم خدمة (تحقيق) المقدمة من الهيئة الوطنية السعودية للأمن السيبراني للتحقق من الروابط المشبوهة عبر واتساب على الرقم: +966118136644 أو تفضل بزيارة الموقع الإلكتروني: https://tahqaq.haseen.gov.sa
-        أو استخدم منصة iBarry الأمنية.
-        للتحقق من روابطك، على الرابط: https://www.ibarry.ch/en/security-checks/ </li>
-        <li>إذا تلقيت رسالة/رابطًا مشبوهًا، فأبلغ عنه دائمًا إلى الجهة المعنية / أو مقدم الخدمة المعني (مثل البنك، أو جهة حكومية، إلخ).</li>
-        <li>هل نقرت بالفعل على رابط مشبوه؟ أبلغ عنه فوراً إلى مقدم الخدمة أو (خدمة الإبلاغ عن الجرائم الإلكترونية السعودية على https://my.gov.sa/en/services/398352) أو (تطبيق كلنا أمن).</li>
-        <li>إذا أبلغت بالفعل عن النقر على رسالة/رابط مشبوه ، اتبع هذه الإجراءات الإضافية للحد من الأضرار المحتملة: راقب حساباتك بحثًا عن أي نشاط مشبوه او غير اعتيادي، غيّر كلمات المرور، وافحص جهازك ببرنامج مكافحة الفيروسات.</li>
-      </ul>
-      <h3>أخطاء شائعة</h3>
-      <ul>
-        <li>التسرّع في الاستجابة للرسائل / الروابط بدافع الاندفاع أو الخوف.</li>
-        <li>النقر على روابط من مصادر غير معروفة وكشف معلومات شخصية .</li>
-      </ul>
     </section>
 
+    <!-- 3 -->
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 00-7.07 17.07l1.41-1.41A8 8 0 1120 12h2A10 10 0 0012 2zm-1 11.59l-2.29-2.3-1.42 1.42L11 16.41l6-6-1.41-1.41L11 13.59z"></path></svg>
-        </span>
-        استخدام وتمكين التحقق الثنائي (2FA)
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 00-7.07 17.07l1.41-1.41A8 8 0 1120 12h2A10 10 0 0012 2zm-1 11.59l-2.29-2.3-1.42 1.42L11 16.41l6-6-1.41-1.41L11 13.59z"></path></svg>
+      </span>استخدام وتمكين التحقق الثنائي (2FA)</h2>
+
+      <h3>لماذا مهم؟</h3>
+      <ul><li>تتطلب المصادقة الثنائية خطوة إضافية.</li><li>توفر حماية إضافية.</li></ul>
+      <h3>نصائح عملية</h3>
+      <ul><li>استخدم المصادقة الثنائية للحسابات المهمة...</li><li>اتبع تعليمات مزود الخدمة...</li><li>قد تحتاج لتطبيق مصادقة...</li></ul>
+      <h3>أخطاء شائعة</h3>
+      <ul><li>إعطاء رمز التحقق الثنائي الخاص بك لمخترق.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="ar" data-beh="3">
         بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
       </label>
-
-      <h3>لماذا مهم؟</h3>
-      <ul>
-        <li>تتطلب المصادقة الثنائية (التحقق الثنائي) منك إدخال كلمة مرورك، ثم القيام بخطوة إضافية: كإدخال رمز أمان من هاتفك الذكي، أو استخدام بيانات بيومترية كبصمة وجهك أو إصبعك.</li>
-        <li>توفر لك حماية إضافية في حال تم تخمين كلمة مرورك أو تسريبها.</li>
-      </ul>
-      <h3>نصائح عملية</h3>
-      <ul>
-        <li>استخدم المصادقة الثنائية للحسابات المهمة والحساسة وذات القيمة العالية (مثل البريد الإلكتروني والحسابات المصرفية، الحكومية…)..</li>
-        <li>يقدم معظم مزودي الخدمات تعليمات مفصلة خطوة بخطوة لإضافة المصادقة الثنائية إلى حساباتك ، اطلع عليها وطبقها.</li>
-        <li>قد يُطلب منك تثبيت واستخدام تطبيقات مصادقة مثل Google Authenticator أو Microsoft Authenticator، لإنشاء رمز لمرة واحدة عند تسجيل الدخول.</li>
-      </ul>
-      <h3>أخطاء شائعة</h3>
-      <ul>
-        <li>إعطاء رمز التحقق الثنائي الخاص بك لمخترق.</li>
-      </ul>
     </section>
 
+    <!-- 4 -->
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M6 3h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zm0 10h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2zm6-9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
-        </span>
-        النسخ الاحتياطي للبيانات
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M6 3h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zm0 10h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2zm6-9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
+      </span>النسخ الاحتياطي للبيانات</h2>
+
+      <h3>لماذا مهم؟</h3>
+      <ul><li>النسخة الاحتياطية نسخة من بياناتك المهمة.</li><li>تساعدك على الاستعادة عند الفقدان.</li></ul>
+      <h3>نصائح عملية</h3>
+      <ul><li>انسخ احتياطيًا بانتظام.</li><li>اطّلع على تعليمات مزود الخدمة.</li><li>اختبر النسخ الاحتياطية.</li></ul>
+      <h3>أخطاء شائعة</h3>
+      <ul><li>عدم إجراء نسخ احتياطية بانتظام.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="ar" data-beh="4">
         بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
       </label>
-
-      <h3>لماذا مهم؟</h3>
-      <ul>
-        <li>النسخة الاحتياطية هي نسخة من بياناتك المهمة مخزنة في مكان مختلف عن الملف الأصلي.</li>
-        <li>تضمن لك النسخ الاحتياطية الحماية من فقدان الملفات القيّمة والمهمة، حيث يمكنك استعادة بياناتك في حال فقدان الملف الأصلي.</li>
-      </ul>
-      <h3>نصائح عملية</h3>
-      <ul>
-        <li>احفظ نسخًا احتياطية من بياناتك وملفاتك المهمة بانتظام باستخدام التخزين السحابي، أو وسائط التخزين الخارجية (القرص الصلب الخارجي)، أو كليهما.</li>
-        <li>عند اختيارك نسخ بياناتك احتياطيًا باستخدام التخزين السحابي (مثل Apple iCloud أو Google Drive أو Microsoft OneDrive) أو وسائط التخزين الخارجية، اطّلع على التعليمات ذات الصلة على الموقع الإلكتروني الرسمي لمزود الخدمة.</li>
-        <li>اختبر نسخك الاحتياطية بانتظام.</li>
-      </ul>
-      <h3>أخطاء شائعة</h3>
-      <ul>
-        <li>عدم إجراء نسخ احتياطية بانتظام.</li>
-      </ul>
     </section>
 
+    <!-- 5 -->
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 1010 10h-2A8 8 0 1120 12h2A10 10 0 0012 2zm1 5h-2v6l5 3 .9-1.8-3.9-2.2V7z"></path></svg>
-        </span>
-        تحديث الأنظمة، البرامج والتطبيقات
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 1010 10h-2A8 8 0 1120 12h2A10 10 0 0012 2zm1 5h-2v6l5 3 .9-1.8-3.9-2.2V7z"></path></svg>
+      </span>تحديث الأنظمة، البرامج والتطبيقات</h2>
+
+      <h3>لماذا مهم؟</h3>
+      <ul><li>التحديثات تتضمن إصلاحات للثغرات وتحسين الأداء.</li></ul>
+      <h3>نصائح عملية</h3>
+      <ul><li>فعّل التحديثات التلقائية.</li><li>ثبّت التحديثات فور صدورها.</li><li>نزّل من مصادر موثوقة.</li><li>تجنّب الأجهزة غير المدعومة.</li></ul>
+      <h3>أخطاء شائعة</h3>
+      <ul><li>تأجيل أو تجاهل تحديثات النظام/البرامج/التطبيقات.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="ar" data-beh="5">
         بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
       </label>
-
-      <h3>لماذا مهم؟</h3>
-      <ul>
-        <li>التحديثات هي إصدارات جديدة من الأنظمة والبرامج والتطبيقات، تتضمن ميزات جديدة لإصلاح الثغرات الأمنية وتحسين الأداء.</li>
-      </ul>
-      <h3>نصائح عملية</h3>
-      <ul>
-        <li>فعّل التحديثات التلقائية في إعدادات جهازك. هذا يعني أنك لن تحتاج إلى تذكر تثبيت التحديثات.</li>
-        <li>ثبّت التحديثات فور صدورها.</li>
-        <li>نزّل التحديثات فقط من مصادر موثوقة ورسمية.</li>
-        <li>)تجنّب استخدام الأجهزة التي لم تعد تتلقى تحديثات ( توقّف دعم التحديثات لها.</li>
-      </ul>
-      <h3>أخطاء شائعة</h3>
-      <ul>
-        <li>تأجيل أو تجاهل تحديثات النظام/البرامج /التطبيقات.</li>
-      </ul>
     </section>
 
     <div class="closing"> ابقى متيقظاً وآمناً ! </div>
+
+    <!-- moved the old guidance here -->
+    <div class="closing">
+      بعد الانتهاء من الاطلاع على النصائح وقراءة محتوى الصفحة،
+      يرجى الضغط على الزر أدناه للانتقال إلى الجزء التالي من التجربة.
+    </div>
   </div>
 
   <!-- English Content -->
   <div dir="ltr" id="content-en" lang="en" style="display:none">
+    <!-- NOTE: keeping your English behavior text as-is; checkboxes are at the end of each behavior -->
 
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 116 0v3z"></path></svg>
-        </span>
-        Use Strong Passwords
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 116 0v3z"></path></svg>
+      </span>Use Strong Passwords</h2>
+
+      <h3>Why it matters</h3>
+      <ul><li>Passwords prevent outsiders from accessing your online accounts.</li><li>Strong passwords protect your accounts.</li></ul>
+      <h3>Practical advice</h3>
+      <ul><li>Use a long password – at least 10 characters.</li><li>A strong password is made up of three random words e.g., Cup Fish Biro.</li><li>If the three random words doesn’t meet website requirements, you can start the words with an upper case letter and then append your favourite number and ?.</li><li>Choose passwords that are easy for you to remember and hard for others to guess.</li><li>Use different passwords for different accounts.</li><li>Do not share your passwords with others.</li></ul>
+      <h3>Common mistakes</h3>
+      <ul><li>Guessable passwords like your birthdate, phone Number, pet name as a password.</li><li>Using the same password for multiple accounts.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="en" data-beh="1">
         After finishing reading this section, please tick this box
       </label>
-
-      <h3>Why it matters</h3>
-      <ul>
-        <li>Passwords prevent outsiders from accessing your online accounts.</li>
-        <li>Strong passwords protect your accounts.</li>
-      </ul>
-      <h3>Practical advice</h3>
-      <ul>
-        <li>Use a long password – at least 10 characters.</li>
-        <li>A strong password is made up of three random words e.g., Cup Fish Biro.</li>
-        <li>If the three random words doesn’t meet website requirements, you can start the words with an upper case letter and then append your favourite number and ?.</li>
-        <li>Choose passwords that are easy for you to remember and hard for others to guess.</li>
-        <li>Use different passwords for different accounts.</li>
-        <li>Do not share your passwords with others.</li>
-      </ul>
-      <h3>Common mistakes</h3>
-      <ul>
-        <li>Guessable passwords like your birthdate, phone Number, pet name as a password.</li>
-        <li>Using the same password for multiple accounts.</li>
-      </ul>
     </section>
 
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M10.59 13.41L9.17 12l4.24-4.24a3 3 0 114.24 4.24l-1.41 1.41-1.41-1.41 1.41-1.41a1 1 0 10-1.41-1.41L8.76 13.05a3 3 0 01-4.24-4.24l1.41-1.41 1.41 1.41-1.41 1.41a1 1 0 101.41 1.41l3.66-3.66 1.41 1.41-3.66 3.66a3 3 0 004.24 4.24l4.24-4.24 1.41 1.41-4.24 4.24a5 5 0 01-7.07-7.07l4.24-4.24 1.41 1.41-4.24 4.24"></path></svg>
-        </span>
-        Checking Links Before Clicking In Messages (Anti-Phishing)
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M10.59 13.41L9.17 12l4.24-4.24a3 3 0 114.24 4.24l-1.41 1.41-1.41-1.41 1.41-1.41a1 1 0 10-1.41-1.41L8.76 13.05a3 3 0 01-4.24-4.24l1.41-1.41 1.41 1.41-1.41 1.41a1 1 0 101.41 1.41l3.66-3.66 1.41 1.41-3.66 3.66a3 3 0 004.24 4.24l4.24-4.24 1.41 1.41-4.24 4.24a5 5 0 01-7.07-7.07l4.24-4.24 1.41 1.41-4.24 4.24"></path></svg>
+      </span>Checking Links Before Clicking In Messages (Anti-Phishing)</h2>
+
+      <h3>Why it matters</h3>
+      <ul><li>It protects you from data theft, device compromise, and data takeover.</li><li>It protects you from cyber risks and phishing.</li></ul>
+      <h3>Practical advice</h3>
+      <ul><li>Slow down 5 seconds before clicking and look for red flags (rushing/scaring/rewarding language).</li></ul>
+      <h3>Common mistakes</h3>
+      <ul><li>Rushing to act due to urgency or fear.</li><li>Clicking unknown links and disclosing personal information.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="en" data-beh="2">
         After finishing reading this section, please tick this box
       </label>
-
-      <h3>Why it matters</h3>
-      <ul>
-        <li>It protects you from data theft, device compromise, and data takeover.</li>
-        <li>It protects you from cyber risks and phishing.</li>
-      </ul>
-      <h3>Practical advice</h3>
-      <ul>
-        <li>Slow down 5 seconds before clicking and look for red flags (rushing/scaring/rewarding language).</li>
-        <li>Verify the sender’s identity when you receive a suspicious message/link (Do you know him/her? Do you expect this? Can you verify via another channel?).</li>
-        <li>Do not enter your personal/sensitive information via message links (e.g., name, birthdate, ID, passwords, OTP, bank details).</li>
-        <li>If it is an official entity, match the sender address/link with the entity’s official website 100%.</li>
-        <li>Still not sure? Use Tahqaq via WhatsApp: +966118136644 or visit https://tahqaq.haseen.gov.sa or use iBarry: https://www.ibarry.ch/en/security-checks/.</li>
-        <li>Always report suspicious messages/links to the relevant entity/service provider.</li>
-        <li>Already clicked? Report immediately and change passwords, monitor accounts, scan device.</li>
-      </ul>
-      <h3>Common mistakes</h3>
-      <ul>
-        <li>Rushing to act due to urgency or fear.</li>
-        <li>Clicking unknown links and disclosing personal information.</li>
-      </ul>
     </section>
 
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 00-7.07 17.07l1.41-1.41A8 8 0 1120 12h2A10 10 0 0012 2zm-1 11.59l-2.29-2.3-1.42 1.42L11 16.41l6-6-1.41-1.41L11 13.59z"></path></svg>
-        </span>
-        Use Two-Factor Authentication (2FA)
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 00-7.07 17.07l1.41-1.41A8 8 0 1120 12h2A10 10 0 0012 2zm-1 11.59l-2.29-2.3-1.42 1.42L11 16.41l6-6-1.41-1.41L11 13.59z"></path></svg>
+      </span>Use Two-Factor Authentication (2FA)</h2>
+
+      <h3>Why it matters</h3>
+      <ul><li>2FA requires your password plus an extra step (code or biometric).</li><li>It adds protection if your password is guessed or leaked.</li></ul>
+      <h3>Practical advice</h3>
+      <ul><li>Use 2FA for high-value, sensitive accounts.</li></ul>
+      <h3>Common mistakes</h3>
+      <ul><li>Giving your 2FA code to a hacker.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="en" data-beh="3">
         After finishing reading this section, please tick this box
       </label>
-
-      <h3>Why it matters</h3>
-      <ul>
-        <li>2FA requires your password plus an extra step (code or biometric).</li>
-        <li>It adds protection if your password is guessed or leaked.</li>
-      </ul>
-      <h3>Practical advice</h3>
-      <ul>
-        <li>Use 2FA for high-value, sensitive accounts (email, banking).</li>
-        <li>Follow provider step-by-step instructions.</li>
-        <li>You may use authenticator apps (Google/Microsoft Authenticator).</li>
-      </ul>
-      <h3>Common mistakes</h3>
-      <ul>
-        <li>Giving your 2FA code to a hacker.</li>
-      </ul>
     </section>
 
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M6 3h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zm0 10h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2zm6-9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
-        </span>
-        Data Backup
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M6 3h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zm0 10h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2zm6-9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
+      </span>Data Backup</h2>
+
+      <h3>Why it matters</h3>
+      <ul><li>A backup is a copy of your important data stored separately.</li><li>It helps you recover valuable files if lost.</li></ul>
+      <h3>Practical advice</h3>
+      <ul><li>Back up regularly using cloud or external storage.</li></ul>
+      <h3>Common mistakes</h3>
+      <ul><li>Not making backups regularly.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="en" data-beh="4">
         After finishing reading this section, please tick this box
       </label>
-
-      <h3>Why it matters</h3>
-      <ul>
-        <li>A backup is a copy of your important data stored separately.</li>
-        <li>It helps you recover valuable files if lost.</li>
-      </ul>
-      <h3>Practical advice</h3>
-      <ul>
-        <li>Back up regularly using cloud or external storage (or both).</li>
-        <li>Follow provider’s official instructions.</li>
-        <li>Test your backups regularly.</li>
-      </ul>
-      <h3>Common mistakes</h3>
-      <ul>
-        <li>Not making backups regularly.</li>
-      </ul>
     </section>
 
     <section class="beh">
-      <h2>
-        <span aria-hidden="true" class="icon">
-          <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 1010 10h-2A8 8 0 1120 12h2A10 10 0 0012 2zm1 5h-2v6l5 3 .9-1.8-3.9-2.2V7z"></path></svg>
-        </span>
-        Update System, Software & Apps
-      </h2>
+      <h2><span aria-hidden="true" class="icon">
+        <svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 1010 10h-2A8 8 0 1120 12h2A10 10 0 0012 2zm1 5h-2v6l5 3 .9-1.8-3.9-2.2V7z"></path></svg>
+      </span>Update System, Software & Apps</h2>
+
+      <h3>Why it matters</h3>
+      <ul><li>Updates fix vulnerabilities and improve performance.</li></ul>
+      <h3>Practical advice</h3>
+      <ul><li>Turn on automatic updates.</li><li>Install updates as soon as released.</li></ul>
+      <h3>Common mistakes</h3>
+      <ul><li>Delaying or ignoring updates.</li></ul>
 
       <label class="read-check">
         <input type="checkbox" class="beh-read" data-lang="en" data-beh="5">
         After finishing reading this section, please tick this box
       </label>
-
-      <h3>Why it matters</h3>
-      <ul>
-        <li>Updates fix vulnerabilities and improve performance.</li>
-      </ul>
-      <h3>Practical advice</h3>
-      <ul>
-        <li>Turn on automatic updates.</li>
-        <li>Install updates as soon as released.</li>
-        <li>Only download updates from official sources.</li>
-        <li>Avoid devices that no longer receive updates.</li>
-      </ul>
-      <h3>Common mistakes</h3>
-      <ul>
-        <li>Delaying or ignoring updates.</li>
-      </ul>
     </section>
 
     <div class="closing">Stay mindful and safe! </div>
   </div>
 
-  <!-- ✅ Gated Next button (shared) -->
+  <!-- ✅ Gated Next button -->
   <div id="next-wrap">
+    <!-- ✅ only addition: fixed instruction sentence (button texts unchanged) -->
+    <p id="fixed-instruction">
+      After reviewing the content of this page, please click the button below to proceed to the next part of the experiment
+      (but first you need to read and then check the boxes for each of the five behaviours).
+    </p>
+
     <p id="gate-msg" class="muted"></p>
     <p id="pay-note"></p>
     <a id="next-btn" href="#"></a>
@@ -555,41 +405,25 @@
   const btnEn = document.getElementById('btn-en');
   const toggleTheme = document.getElementById('toggle-theme');
 
-  // ✅ participant_id from URL
   const urlParams = new URLSearchParams(window.location.search);
   const participantId = urlParams.get('participant_id') || '';
 
-  // ✅ timer
   const startTime = Date.now();
-  const timeEl = document.getElementById('time-elapsed');
-  const progressEl = document.getElementById('progress-text');
+  function elapsedSeconds(){
+    return Math.round((Date.now() - startTime)/1000);
+  }
 
-  // ✅ gate elements
   const nextWrap = document.getElementById('next-wrap');
   const gateMsg  = document.getElementById('gate-msg');
   const payNote  = document.getElementById('pay-note');
   const nextBtn  = document.getElementById('next-btn');
 
-  // ✅ next survey URL
   const nextSurveyBaseUrl = 'https://strath.eu.qualtrics.com/jfe/form/SV_034Ksjs3ZFTR60m';
 
   let currentLang = 'ar';
 
-  function fmt(sec){
-    const m = String(Math.floor(sec/60)).padStart(2,'0');
-    const s = String(sec%60).padStart(2,'0');
-    return `${m}:${s}`;
-  }
-  function elapsedSeconds(){
-    return Math.round((Date.now() - startTime)/1000);
-  }
-
   function getCurrentChecks(){
     return Array.from(document.querySelectorAll(`.beh-read[data-lang="${currentLang}"]`));
-  }
-
-  function checkedCount(){
-    return getCurrentChecks().filter(c => c.checked).length;
   }
 
   function allChecked(){
@@ -597,38 +431,19 @@
     return (checks.length === 5) && checks.every(c => c.checked);
   }
 
-  function updateProgress(){
-    const count = checkedCount();
-    if (!progressEl) return;
-    progressEl.textContent = (currentLang === 'ar')
-      ? `التقدّم: ${count}/5`
-      : `Progress: ${count}/5`;
-  }
-
   function setGateTexts(){
     if(currentLang === 'ar'){
       if (gateMsg) gateMsg.textContent = "لإظهار زر الانتقال: يرجى قراءة السلوكيات الخمس وتعليمها بعد الانتهاء من كل سلوك.";
       if (payNote) payNote.textContent = "مهم: للحصول على الدفع، يرجى إكمال الجزء التالي.";
       if (nextBtn) nextBtn.textContent = "الانتقال إلى الجزء التالي من الاستبيان";
-      if (timeEl) timeEl.textContent = `الوقت: ${fmt(elapsedSeconds())}`;
     } else {
       if (gateMsg) gateMsg.textContent = "To unlock the Next button: please read all five sections and tick each box after finishing.";
       if (payNote) payNote.textContent = "Important: To receive payment, please complete the next part.";
       if (nextBtn) nextBtn.textContent = "Go to the next part of the survey";
-      if (timeEl) timeEl.textContent = `Time: ${fmt(elapsedSeconds())}`;
     }
-    updateProgress();
   }
 
   function updateGate(){
-    const sec = elapsedSeconds();
-
-    if (timeEl){
-      timeEl.textContent = (currentLang === 'ar') ? `الوقت: ${fmt(sec)}` : `Time: ${fmt(sec)}`;
-    }
-
-    updateProgress();
-
     if (!nextWrap) return;
 
     if (allChecked()){
@@ -707,15 +522,10 @@
   if (btnEn) btnEn.addEventListener('click', function(){ setLang('en'); });
   if (toggleTheme) toggleTheme.addEventListener('click', toggleNight);
 
-  // checkbox listeners
   document.querySelectorAll('.beh-read').forEach(cb => {
     cb.addEventListener('change', updateGate);
   });
 
-  // tick timer
-  setInterval(updateGate, 1000);
-
-  // build link on click
   if (nextBtn){
     nextBtn.addEventListener('click', function(e){
       if (!allChecked()){
@@ -731,7 +541,6 @@
     });
   }
 
-  // initial
   try {
     setLang(localStorage.getItem('lang') || 'ar');
     const savedTheme = localStorage.getItem('theme') || 'day';
@@ -742,3 +551,4 @@
 
 </body>
 </html>
+
