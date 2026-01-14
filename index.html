@@ -52,90 +52,92 @@ body[data-theme="night"] .logo { background:#163463; }
 
     /* LTR support */
     html[dir="ltr"] ul{padding-inline-start:22px}
-  .edit-outline{outline:2px dashed #94a3b8; outline-offset:4px; border-radius:8px;}
-  body[data-edit-mode="on"] .btn#edit-toggle{border-color:#f59e0b}
+    .edit-outline{outline:2px dashed #94a3b8; outline-offset:4px; border-radius:8px;}
+    body[data-edit-mode="on"] .btn#edit-toggle{border-color:#f59e0b}
 
-  /* ✅ NEW: Checkbox block */
-  .read-check{
-    display:block;
-    margin-top:16px;
-    padding:10px 14px;
-    background:#f1f5ff;
-    border:1px solid #c7d2fe;
-    border-radius:10px;
-    font-weight:800;
-    color:#1e3a8a;
-    cursor:pointer;
-  }
-  html[dir="ltr"] .read-check{ text-align:left; }
-  .read-check input{
-    margin-inline-end:8px;
-    transform:scale(1.2);
-    cursor:pointer;
-  }
-  body[data-theme="night"] .read-check{
-    background:#0b1f48;
-    border-color:#20325c;
-    color:#e7ecf7;
-  }
+    /* ✅ NEW: checkbox style */
+    .read-check{
+      display:block;
+      margin:16px 0 0;
+      padding:10px 14px;
+      background:#f1f5ff;
+      border:1px solid #c7d2fe;
+      border-radius:10px;
+      font-weight:800;
+      color:#1e3a8a;
+      cursor:pointer;
+      text-align:start;
+    }
+    html[dir="ltr"] .read-check{ text-align:left; }
+    .read-check input{
+      margin-inline-end:8px;
+      transform:scale(1.2);
+      cursor:pointer;
+    }
+    body[data-theme="night"] .read-check{
+      background:#0b1f48;
+      border-color:#20325c;
+      color:#e7ecf7;
+    }
 
-  /* ✅ NEW: Next button (hidden until 5/5 checked) */
-  #next-wrap{
-    display:none;
-    margin:26px 0 10px;
-    background:#fff;
-    border:1px dashed var(--border);
-    border-radius:14px;
-    padding:16px;
-    text-align:center;
-  }
-  body[data-theme="night"] #next-wrap{
-    background:#0b1f48;
-    border-color:#20325c;
-  }
+    /* ✅ NEW: fixed instruction after closing */
+    #fixed-instruction{
+      margin:22px 0 8px;
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius:14px;
+      padding:14px;
+      text-align:center;
+      font-weight:800;
+      color:#0f172a;
+    }
+    body[data-theme="night"] #fixed-instruction{
+      background:#0b1f48;
+      color:#e7ecf7;
+      border-color:#20325c;
+    }
 
-  #fixed-instruction{
-    margin:22px 0 8px;
-    background:#fff;
-    border:1px dashed var(--border);
-    border-radius:14px;
-    padding:14px;
-    text-align:center;
-    font-weight:800;
-    color:#0f172a;
-  }
-  body[data-theme="night"] #fixed-instruction{
-    background:#0b1f48;
-    color:#e7ecf7;
-    border-color:#20325c;
-  }
+    /* ✅ NEW: Gate block + button */
+    #next-wrap{
+      display:none; /* يظهر فقط بعد 5/5 */
+      text-align:center;
+      margin:26px 0 20px;
+      background:var(--card);
+      border:1px dashed var(--border);
+      border-radius:14px;
+      padding:18px;
+    }
+    body[data-theme="night"] #next-wrap{
+      background:#0b1f48;
+      border-color:#20325c;
+    }
 
-  #next-btn{
-    display:inline-block;
-    background:#16a34a;
-    color:#fff;
-    padding:16px 26px;
-    border-radius:14px;
-    font-size:18px;
-    font-weight:900;
-    text-decoration:none;
-    box-shadow:0 10px 24px rgba(22,163,74,.35);
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  #next-btn:hover{
-    transform: translateY(-2px);
-    box-shadow:0 14px 30px rgba(22,163,74,.45);
-  }
+    #pay-note{
+      margin:0 0 14px 0;
+      font-weight:900;
+      color:#b45309;
+    }
+    body[data-theme="night"] #pay-note{ color:#fbbf24; }
 
-  #pay-note{
-    margin:0 0 12px 0;
-    font-weight:900;
-    color:#b45309;
-  }
-  body[data-theme="night"] #pay-note{ color:#fbbf24; }
+    #next-btn{
+      display:inline-block;
+      background:#16a34a;
+      color:#fff;
+      padding:16px 26px;
+      border-radius:14px;
+      font-size:18px;
+      font-weight:900;
+      text-decoration:none;
+      box-shadow:0 10px 24px rgba(22,163,74,.35);
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    #next-btn:hover{
+      transform: translateY(-2px);
+      box-shadow:0 14px 30px rgba(22,163,74,.45);
+    }
 
-  /* ✅ Timer hidden */
-  #timerHidden{ display:none; }
+    /* ✅ NEW: hidden timer (not visible) */
+    #timerHidden{ display:none; }
 </style>
 </head>
 <body>
@@ -159,9 +161,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <div class="hero" id="hero-ar">
 <h1 id="hero">أمانك يبدأ من عاداتك وممارساتك السليمة!</h1>
 <p class="muted" id="hero-desc">خمس سلوكيات سيبرانية قد تجعلك آمنا في الفضاء السيبراني والبيئات الرقمية!<br/> تعرف على كل سلوك لماذا هو مهم، وماهي النصائح العملية لتطبيقه، وما الأخطاء الشائعة لتجنّبها.</p>
-</div>
-
-<div class="hero" id="hero-en" style="display:none;"><h1>Your cybersecurity starts from your safe practices and habits!</h1><p class="muted">Five cyber practices that help keep you safe across online services and digital environments.<br/>Learn why each practice matters, what are practical advice to apply it, and common mistakes to avoid.</p></div>
+</div><div class="hero" id="hero-en" style="display:none;"><h1>Your cybersecurity starts from your safe practices and habits!</h1><p class="muted">Five cyber practices that help keep you safe across online services and digital environments.<br/>Learn why each practice matters, what are practical advice to apply it, and common mistakes to avoid.</p></div>
 
 <!-- Arabic Content -->
 <div id="content-ar">
@@ -192,12 +192,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>استخدم كلمات مرور يمكن تخمينها مثل تاريخ ميلادك ورقم هاتفك واسم حيوانك الأليف ككلمة مرور.</li>
 <li> .استخدام نفس كلمة المرور لحسابات متعددة </li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar">
-  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="ar"> إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك</label>
 </section>
 
 <section class="beh">
@@ -225,18 +220,12 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>هل نقرت بالفعل على رابط مشبوه؟ أبلغ عنه فوراً إلى مقدم الخدمة أو (خدمة الإبلاغ عن الجرائم الإلكترونية السعودية على https://my.gov.sa/en/services/398352) أو (تطبيق كلنا أمن).</li>
 <li>إذا أبلغت بالفعل عن النقر على رسالة/رابط مشبوه ، اتبع هذه الإجراءات الإضافية للحد من الأضرار المحتملة: راقب حساباتك بحثًا عن أي نشاط مشبوه او غير اعتيادي، غيّر كلمات المرور، وافحص جهازك ببرنامج مكافحة الفيروسات.</li>
 </ul>
-
 <h3>أخطاء شائعة</h3>
 <ul>
 <li>التسرّع في الاستجابة للرسائل / الروابط بدافع الاندفاع أو الخوف.</li>
 <li>النقر على روابط من مصادر غير معروفة وكشف معلومات شخصية .</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar">
-  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="ar"> إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك</label>
 </section>
 
 <section class="beh">
@@ -261,12 +250,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <ul>
 <li>إعطاء رمز التحقق الثنائي الخاص بك لمخترق.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar">
-  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="ar"> إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك</label>
 </section>
 
 <section class="beh">
@@ -291,12 +275,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <ul>
 <li>عدم إجراء نسخ احتياطية بانتظام.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar">
-  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="ar"> إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك</label>
 </section>
 
 <section class="beh">
@@ -321,17 +300,12 @@ body[data-theme="night"] .logo { background:#163463; }
 <ul>
 <li>تأجيل أو تجاهل تحديثات النظام/البرامج /التطبيقات.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar">
-  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="ar"> إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك</label>
 </section>
 
 <div class="closing"> ابقى متيقظاً وآمناً ! </div>
 
-<!-- ✅ NEW: fixed instruction after "ابقى متيقظاً وآمناً!" (Arabic only) -->
+<!-- ✅ ثابت بعد "ابقى متيقظاً وآمناً!" (عربي) -->
 <div id="fixed-instruction">
   بعد مراجعة محتوى هذه الصفحة، يرجى الضغط على الزر أدناه للانتقال إلى الجزء التالي من التجربة
   (ولكن أولاً عليك قراءة السلوكيات الخمس ثم وضع علامة على المربعات لكل سلوك).
@@ -341,7 +315,6 @@ body[data-theme="night"] .logo { background:#163463; }
 
 <!-- English Content -->
 <div dir="ltr" id="content-en" lang="en" style="display:none">
-
 <section class="beh">
 <h2>
 <span aria-hidden="true" class="icon">
@@ -368,12 +341,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>Guessable passwords like your birthdate, phone Number, pet name as a password.</li>
 <li>Using the same password for multiple accounts.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en">
-  After finishing reading this section, please tick this box for this behaviour
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="en"> After finishing reading this section, please tick this box for this behaviour</label>
 </section>
 
 <section class="beh">
@@ -404,12 +372,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>Rushing to act on messages/links due to urgency or fear.</li>
 <li> Clicking on links from unknown sources and disclosing personal information.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en">
-  After finishing reading this section, please tick this box for this behaviour
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="en"> After finishing reading this section, please tick this box for this behaviour</label>
 </section>
 
 <section class="beh">
@@ -434,12 +397,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <ul>
 <li>Giving your 2FA code to a hacker.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en">
-  After finishing reading this section, please tick this box for this behaviour
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="en"> After finishing reading this section, please tick this box for this behaviour</label>
 </section>
 
 <section class="beh">
@@ -464,12 +422,7 @@ Data Backup
 <ul>
 <li>Not making backups regularly.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en">
-  After finishing reading this section, please tick this box for this behaviour
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="en"> After finishing reading this section, please tick this box for this behaviour</label>
 </section>
 
 <section class="beh">
@@ -494,17 +447,12 @@ Data Backup
 <ul>
 <li>Delaying or ignoring system/ software/ apps updates.</li>
 </ul>
-
-<label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en">
-  After finishing reading this section, please tick this box for this behaviour
-</label>
-
+<label class="read-check"><input type="checkbox" class="beh-read" data-lang="en"> After finishing reading this section, please tick this box for this behaviour</label>
 </section>
 
 <div class="closing">Stay mindful and safe! </div>
 
-<!-- ✅ NEW: fixed instruction after "Stay mindful and safe!" (English only) -->
+<!-- ✅ ثابت بعد "Stay mindful and safe!" (English) -->
 <div id="fixed-instruction" dir="ltr" lang="en">
   After reviewing the content of this page, please click the button below to proceed to the next part of the experiment
   (but first you need to read and then check the boxes for each of the five behaviours).
@@ -512,13 +460,13 @@ Data Backup
 
 </div>
 
-<!-- ✅ NEW: Next button area (shared) -->
+<!-- ✅ زر الانتقال (مشترك) يظهر بعد 5/5 -->
 <div id="next-wrap">
   <p id="pay-note"></p>
-  <a id="next-btn" href="#">Next</a>
+  <a id="next-btn" href="#">Proceed</a>
 </div>
 
-<!-- hidden timer element -->
+<!-- ✅ تايمر مخفي -->
 <div id="timerHidden">0</div>
 
 </main>
@@ -574,6 +522,7 @@ Data Backup
       if (footAr)  footAr.style.display  = 'none';
       if (footEn)  footEn.style.display  = 'inline';
     }
+
     try { localStorage.setItem('lang', lang); } catch(e){}
     if (btnAr) btnAr.classList.toggle('active', lang === 'ar');
     if (btnEn) btnEn.classList.toggle('active', lang === 'en');
@@ -599,10 +548,9 @@ Data Backup
     if (savedTheme === 'night') document.body.setAttribute('data-theme','night');
   } catch(e) { setLang('ar'); }
 
-  // ✅ NEW: timer start (hidden)
+  // ✅ timer start (hidden)
   const startTime = Date.now();
   const timerHidden = document.getElementById('timerHidden');
-
   function elapsedSeconds(){
     return Math.round((Date.now() - startTime)/1000);
   }
@@ -610,14 +558,14 @@ Data Backup
     if (timerHidden) timerHidden.textContent = String(elapsedSeconds());
   }, 1000);
 
-  // ✅ NEW: get participant_id from URL (prefer participant_id, fallback pid)
+  // ✅ get participant_id from URL (prefer participant_id, fallback pid)
   const params = new URLSearchParams(window.location.search);
   const participantId = params.get('participant_id') || params.get('pid') || '';
 
-  // ✅ NEW: survey 2 base
+  // ✅ survey 2 base
   const nextSurveyBaseUrl = 'https://strath.eu.qualtrics.com/jfe/form/SV_034Ksjs3ZFTR60m';
 
-  // ✅ NEW: gate logic (5/5)
+  // ✅ gate logic (5/5)
   function getCurrentChecks(){
     return Array.from(document.querySelectorAll(`.beh-read[data-lang="${currentLang}"]`));
   }
@@ -635,10 +583,10 @@ Data Backup
 
     if(currentLang === 'ar'){
       payNote.textContent = 'مهم: للحصول على الدفع أكمل الجزء التالي.';
-      nextBtn.textContent = 'الانتقال إلى الجزء التالي';
+      nextBtn.textContent = 'الانتقال إلى الجزء التالي من الاستبيان';
     } else {
       payNote.textContent = 'Important: To receive payment, please complete the next part.';
-      nextBtn.textContent = 'Proceed to the next part';
+      nextBtn.textContent = 'Go to the next part of the survey';
     }
 
     nextWrap.style.display = allChecked() ? 'block' : 'none';
@@ -648,7 +596,7 @@ Data Backup
     cb.addEventListener('change', updateNextUI);
   });
 
-  // ✅ NEW: Build final URL on click (participant_id + read_time_seconds)
+  // ✅ Build final URL on click (participant_id + read_time_seconds)
   if(nextBtn){
     nextBtn.addEventListener('click', function(e){
       if(!allChecked()){
