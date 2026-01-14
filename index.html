@@ -33,7 +33,6 @@
     .closing{margin:22px 0 8px; background:#fff; border:1px dashed var(--border); border-radius:14px; padding:14px; text-align:center; font-weight:800; color:#0f172a}
 
     $1
-
 /* Ensure text stays readable in night mode */
 body[data-theme="night"] .hero,
 body[data-theme="night"] section.beh,
@@ -56,10 +55,10 @@ body[data-theme="night"] .logo { background:#163463; }
   .edit-outline{outline:2px dashed #94a3b8; outline-offset:4px; border-radius:8px;}
   body[data-edit-mode="on"] .btn#edit-toggle{border-color:#f59e0b}
 
-  /* ✅ NEW: checkbox style (end of each behavior) */
+  /* ✅ NEW: Checkbox block */
   .read-check{
     display:block;
-    margin:16px 0 0;
+    margin-top:16px;
     padding:10px 14px;
     background:#f1f5ff;
     border:1px solid #c7d2fe;
@@ -68,6 +67,7 @@ body[data-theme="night"] .logo { background:#163463; }
     color:#1e3a8a;
     cursor:pointer;
   }
+  html[dir="ltr"] .read-check{ text-align:left; }
   .read-check input{
     margin-inline-end:8px;
     transform:scale(1.2);
@@ -79,34 +79,36 @@ body[data-theme="night"] .logo { background:#163463; }
     color:#e7ecf7;
   }
 
-  /* ✅ NEW: fixed instruction banner (NOT inside next button area) */
-  #fixed-instruction-banner{
-    margin: 0 0 16px 0;
-    text-align:center;
-    font-weight:900;
-    line-height:1.6;
-  }
-
-  /* ✅ NEW: gated next button area */
+  /* ✅ NEW: Next button (hidden until 5/5 checked) */
   #next-wrap{
     display:none;
+    margin:26px 0 10px;
+    background:#fff;
+    border:1px dashed var(--border);
+    border-radius:14px;
+    padding:16px;
     text-align:center;
-    margin:40px 0 20px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px;
   }
-  #gate-msg{
-    font-weight:900;
-    margin: 0 0 12px 0;
+  body[data-theme="night"] #next-wrap{
+    background:#0b1f48;
+    border-color:#20325c;
   }
-  #pay-note{
-    margin: 0 0 14px 0;
-    font-weight:900;
-    color: #b45309;
+
+  #fixed-instruction{
+    margin:22px 0 8px;
+    background:#fff;
+    border:1px dashed var(--border);
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+    font-weight:800;
+    color:#0f172a;
   }
-  body[data-theme="night"] #pay-note{ color:#fbbf24; }
+  body[data-theme="night"] #fixed-instruction{
+    background:#0b1f48;
+    color:#e7ecf7;
+    border-color:#20325c;
+  }
 
   #next-btn{
     display:inline-block;
@@ -125,6 +127,15 @@ body[data-theme="night"] .logo { background:#163463; }
     box-shadow:0 14px 30px rgba(22,163,74,.45);
   }
 
+  #pay-note{
+    margin:0 0 12px 0;
+    font-weight:900;
+    color:#b45309;
+  }
+  body[data-theme="night"] #pay-note{ color:#fbbf24; }
+
+  /* ✅ Timer hidden */
+  #timerHidden{ display:none; }
 </style>
 </head>
 <body>
@@ -150,16 +161,7 @@ body[data-theme="night"] .logo { background:#163463; }
 <p class="muted" id="hero-desc">خمس سلوكيات سيبرانية قد تجعلك آمنا في الفضاء السيبراني والبيئات الرقمية!<br/> تعرف على كل سلوك لماذا هو مهم، وماهي النصائح العملية لتطبيقه، وما الأخطاء الشائعة لتجنّبها.</p>
 </div>
 
-<div class="hero" id="hero-en" style="display:none;">
-<h1>Your cybersecurity starts from your safe practices and habits!</h1>
-<p class="muted">Five cyber practices that help keep you safe across online services and digital environments.<br/>Learn why each practice matters, what are practical advice to apply it, and common mistakes to avoid.</p>
-</div>
-
-<!-- ✅ NEW: Fixed English instruction (NOT inside next-wrap) -->
-<div id="fixed-instruction-banner" class="closing" dir="ltr" lang="en">
-  After reviewing the content of this page, please click the button below to proceed to the next part of the experiment
-  (but first you need to read and then check the boxes for each of the five behaviours).
-</div>
+<div class="hero" id="hero-en" style="display:none;"><h1>Your cybersecurity starts from your safe practices and habits!</h1><p class="muted">Five cyber practices that help keep you safe across online services and digital environments.<br/>Learn why each practice matters, what are practical advice to apply it, and common mistakes to avoid.</p></div>
 
 <!-- Arabic Content -->
 <div id="content-ar">
@@ -191,10 +193,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li> .استخدام نفس كلمة المرور لحسابات متعددة </li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar" data-beh="1">
-  بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+  <input type="checkbox" class="beh-read" data-lang="ar">
+  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
 </label>
 
 </section>
@@ -231,10 +232,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>النقر على روابط من مصادر غير معروفة وكشف معلومات شخصية .</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar" data-beh="2">
-  بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+  <input type="checkbox" class="beh-read" data-lang="ar">
+  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
 </label>
 
 </section>
@@ -262,10 +262,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>إعطاء رمز التحقق الثنائي الخاص بك لمخترق.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar" data-beh="3">
-  بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+  <input type="checkbox" class="beh-read" data-lang="ar">
+  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
 </label>
 
 </section>
@@ -293,10 +292,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>عدم إجراء نسخ احتياطية بانتظام.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar" data-beh="4">
-  بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+  <input type="checkbox" class="beh-read" data-lang="ar">
+  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
 </label>
 
 </section>
@@ -324,26 +322,26 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>تأجيل أو تجاهل تحديثات النظام/البرامج /التطبيقات.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="ar" data-beh="5">
-  بعد الانتهاء من قراءة هذا السلوك بالكامل، فضلاً علّمي على هذا المربع
+  <input type="checkbox" class="beh-read" data-lang="ar">
+  إذا انتهيت من قراءة هذا الجزء، علّم على هذا المربع لهذا السلوك
 </label>
 
 </section>
 
 <div class="closing"> ابقى متيقظاً وآمناً ! </div>
 
-<!-- ✅ NEW: put the old guidance AFTER "ابقى متيقظاً وآمناً!" -->
-<div class="closing">
-  بعد الانتهاء من الاطلاع على النصائح وقراءة محتوى الصفحة،
-  يرجى الضغط على الزر أدناه للانتقال إلى الجزء التالي من التجربة.
+<!-- ✅ NEW: fixed instruction after "ابقى متيقظاً وآمناً!" (Arabic only) -->
+<div id="fixed-instruction">
+  بعد مراجعة محتوى هذه الصفحة، يرجى الضغط على الزر أدناه للانتقال إلى الجزء التالي من التجربة
+  (ولكن أولاً عليك قراءة السلوكيات الخمس ثم وضع علامة على المربعات لكل سلوك).
 </div>
 
 </div>
 
 <!-- English Content -->
 <div dir="ltr" id="content-en" lang="en" style="display:none">
+
 <section class="beh">
 <h2>
 <span aria-hidden="true" class="icon">
@@ -371,10 +369,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>Using the same password for multiple accounts.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en" data-beh="1">
-  After finishing reading this section, please tick this box
+  <input type="checkbox" class="beh-read" data-lang="en">
+  After finishing reading this section, please tick this box for this behaviour
 </label>
 
 </section>
@@ -408,10 +405,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li> Clicking on links from unknown sources and disclosing personal information.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en" data-beh="2">
-  After finishing reading this section, please tick this box
+  <input type="checkbox" class="beh-read" data-lang="en">
+  After finishing reading this section, please tick this box for this behaviour
 </label>
 
 </section>
@@ -439,10 +435,9 @@ body[data-theme="night"] .logo { background:#163463; }
 <li>Giving your 2FA code to a hacker.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en" data-beh="3">
-  After finishing reading this section, please tick this box
+  <input type="checkbox" class="beh-read" data-lang="en">
+  After finishing reading this section, please tick this box for this behaviour
 </label>
 
 </section>
@@ -470,10 +465,9 @@ Data Backup
 <li>Not making backups regularly.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en" data-beh="4">
-  After finishing reading this section, please tick this box
+  <input type="checkbox" class="beh-read" data-lang="en">
+  After finishing reading this section, please tick this box for this behaviour
 </label>
 
 </section>
@@ -501,23 +495,31 @@ Data Backup
 <li>Delaying or ignoring system/ software/ apps updates.</li>
 </ul>
 
-<!-- ✅ NEW: checkbox at END -->
 <label class="read-check">
-  <input type="checkbox" class="beh-read" data-lang="en" data-beh="5">
-  After finishing reading this section, please tick this box
+  <input type="checkbox" class="beh-read" data-lang="en">
+  After finishing reading this section, please tick this box for this behaviour
 </label>
 
 </section>
 
 <div class="closing">Stay mindful and safe! </div>
+
+<!-- ✅ NEW: fixed instruction after "Stay mindful and safe!" (English only) -->
+<div id="fixed-instruction" dir="ltr" lang="en">
+  After reviewing the content of this page, please click the button below to proceed to the next part of the experiment
+  (but first you need to read and then check the boxes for each of the five behaviours).
 </div>
 
-<!-- ✅ NEW: Gated next button (shared, unchanged texts logic) -->
-<div id="next-wrap">
-  <p id="gate-msg" class="muted"></p>
-  <p id="pay-note"></p>
-  <a id="next-btn" href="#"></a>
 </div>
+
+<!-- ✅ NEW: Next button area (shared) -->
+<div id="next-wrap">
+  <p id="pay-note"></p>
+  <a id="next-btn" href="#">Next</a>
+</div>
+
+<!-- hidden timer element -->
+<div id="timerHidden">0</div>
 
 </main>
 
@@ -534,23 +536,6 @@ Data Backup
   const btnAr = document.getElementById('btn-ar');
   const btnEn = document.getElementById('btn-en');
   const toggleTheme = document.getElementById('toggle-theme');
-
-  // ✅ NEW: participant_id from URL + hidden timer start
-  const urlParams = new URLSearchParams(window.location.search);
-  const participantId = urlParams.get('participant_id') || '';
-  const startTime = Date.now();
-  function elapsedSeconds(){
-    return Math.round((Date.now() - startTime)/1000);
-  }
-
-  // ✅ NEW: gate elements
-  const nextWrap = document.getElementById('next-wrap');
-  const gateMsg  = document.getElementById('gate-msg');
-  const payNote  = document.getElementById('pay-note');
-  const nextBtn  = document.getElementById('next-btn');
-
-  // ✅ NEW: next survey
-  const nextSurveyBaseUrl = 'https://strath.eu.qualtrics.com/jfe/form/SV_034Ksjs3ZFTR60m';
 
   let currentLang = 'ar';
 
@@ -593,8 +578,7 @@ Data Backup
     if (btnAr) btnAr.classList.toggle('active', lang === 'ar');
     if (btnEn) btnEn.classList.toggle('active', lang === 'en');
 
-    setGateTexts();
-    updateGate();
+    updateNextUI();
   }
 
   function toggleNight(){
@@ -608,63 +592,68 @@ Data Backup
   if (btnEn) btnEn.addEventListener('click', function(){ setLang('en'); });
   if (toggleTheme) toggleTheme.addEventListener('click', toggleNight);
 
-  // ✅ NEW: gating logic: must check 5/5 in current language
+  // initial
+  try {
+    setLang(localStorage.getItem('lang') || 'ar');
+    const savedTheme = localStorage.getItem('theme') || 'day';
+    if (savedTheme === 'night') document.body.setAttribute('data-theme','night');
+  } catch(e) { setLang('ar'); }
+
+  // ✅ NEW: timer start (hidden)
+  const startTime = Date.now();
+  const timerHidden = document.getElementById('timerHidden');
+
+  function elapsedSeconds(){
+    return Math.round((Date.now() - startTime)/1000);
+  }
+  setInterval(() => {
+    if (timerHidden) timerHidden.textContent = String(elapsedSeconds());
+  }, 1000);
+
+  // ✅ NEW: get participant_id from URL (prefer participant_id, fallback pid)
+  const params = new URLSearchParams(window.location.search);
+  const participantId = params.get('participant_id') || params.get('pid') || '';
+
+  // ✅ NEW: survey 2 base
+  const nextSurveyBaseUrl = 'https://strath.eu.qualtrics.com/jfe/form/SV_034Ksjs3ZFTR60m';
+
+  // ✅ NEW: gate logic (5/5)
   function getCurrentChecks(){
     return Array.from(document.querySelectorAll(`.beh-read[data-lang="${currentLang}"]`));
   }
-
   function allChecked(){
     const checks = getCurrentChecks();
-    return (checks.length === 5) && checks.every(c => c.checked);
+    return checks.length === 5 && checks.every(c => c.checked);
   }
 
-  function setGateTexts(){
+  const nextWrap = document.getElementById('next-wrap');
+  const payNote  = document.getElementById('pay-note');
+  const nextBtn  = document.getElementById('next-btn');
+
+  function updateNextUI(){
+    if(!nextWrap || !payNote || !nextBtn) return;
+
     if(currentLang === 'ar'){
-      if (gateMsg) gateMsg.textContent = "لإظهار زر الانتقال: يرجى قراءة السلوكيات الخمس وتعليمها بعد الانتهاء من كل سلوك.";
-      if (payNote) payNote.textContent = "مهم: للحصول على الدفع، يرجى إكمال الجزء التالي.";
-      if (nextBtn) nextBtn.textContent = "الانتقال إلى الجزء التالي من الاستبيان";
+      payNote.textContent = 'مهم: للحصول على الدفع أكمل الجزء التالي.';
+      nextBtn.textContent = 'الانتقال إلى الجزء التالي';
     } else {
-      if (gateMsg) gateMsg.textContent = "To unlock the Next button: please read all five sections and tick each box after finishing.";
-      if (payNote) payNote.textContent = "Important: To receive payment, please complete the next part.";
-      if (nextBtn) nextBtn.textContent = "Go to the next part of the survey";
+      payNote.textContent = 'Important: To receive payment, please complete the next part.';
+      nextBtn.textContent = 'Proceed to the next part';
     }
+
+    nextWrap.style.display = allChecked() ? 'block' : 'none';
   }
 
-  function updateGate(){
-    if (!nextWrap) return;
-
-    if (allChecked()){
-      nextWrap.style.display = 'block';
-      if (gateMsg){
-        gateMsg.textContent = (currentLang === 'ar')
-          ? "✅ شكرًا! يمكنك الآن الانتقال إلى الجزء التالي."
-          : "✅ Thank you! You can now proceed to the next part.";
-      }
-      if (nextBtn){
-        nextBtn.style.pointerEvents = 'auto';
-        nextBtn.style.opacity = '1';
-      }
-    } else {
-      nextWrap.style.display = 'none';
-      if (nextBtn){
-        nextBtn.style.pointerEvents = 'none';
-        nextBtn.style.opacity = '0.6';
-      }
-      setGateTexts();
-    }
-  }
-
-  // listen to checkbox changes
   document.querySelectorAll('.beh-read').forEach(cb => {
-    cb.addEventListener('change', updateGate);
+    cb.addEventListener('change', updateNextUI);
   });
 
-  // ✅ NEW: build final URL with participant_id + time (hidden)
-  if (nextBtn){
+  // ✅ NEW: Build final URL on click (participant_id + read_time_seconds)
+  if(nextBtn){
     nextBtn.addEventListener('click', function(e){
-      if (!allChecked()){
+      if(!allChecked()){
         e.preventDefault();
-        updateGate();
+        updateNextUI();
         return;
       }
       const sec = elapsedSeconds();
@@ -675,12 +664,9 @@ Data Backup
     });
   }
 
-  // initial
-  try {
-    setLang(localStorage.getItem('lang') || 'ar');
-    const savedTheme = localStorage.getItem('theme') || 'day';
-    if (savedTheme === 'night') document.body.setAttribute('data-theme','night');
-  } catch(e) { setLang('ar'); }
+  // initial UI state
+  updateNextUI();
+
 })();
 </script>
 </body>
